@@ -20,10 +20,10 @@ function updateSlots() {
     container = $('#timeblocks').children()
     for (i=0; i<container.length; i++) {
         if (parseInt(currentTime) > parseInt(container.eq(i).attr('id'))) {
-            container.eq(i).css('backgroundColor', 'red') //bg color to red
+            container.eq(i).attr('class', 'past') //bg color to red
         } else if (parseInt(currentTime) === parseInt(container.eq(i).attr('id'))) {
-            container.eq(i).css('backgroundColor', 'grey')
-        } else (container.eq(i).css('backgroundColor', 'green'))
+            container.eq(i).attr('class', 'present')
+        } else (container.eq(i).attr('class', 'future'))
     }
 }
 
