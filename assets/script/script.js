@@ -25,9 +25,11 @@ function updateSlots() {
     for (i=0; i<container.length; i++) {
         if (parseInt(currentTime) > parseInt(container.eq(i).attr('id'))) {
             // container.eq(i).addClass('past') //bg color to red
+            container.find(forTextDisplay).eq(i).removeClass('present') //present becomes past
             container.find(forTextDisplay).eq(i).addClass('past')
         } else if (parseInt(currentTime) === parseInt(container.eq(i).attr('id'))) {
             // container.eq(i).addClass('present')
+            container.find(forTextDisplay).eq(i).removeClass('future') //future becomes present
             container.find(forTextDisplay).eq(i).addClass('present')
         // } else (container.eq(i).addClass('future'))
         } else (container.find(forTextDisplay).eq(i).addClass('future'))
@@ -91,16 +93,27 @@ function renderTasks () {
 }
 
 function saveDescription (event) { //occurs when pressing the save button
+    console.log(event.target);
     buttonClicked = $(event.target); //find the <button> element
-    savedTask = buttonClicked.parent().siblings().eq(1).text() //find the appropriate  textDisplay element and save the text
-    propertyHour = parseInt(buttonClicked.closest('.row').attr('id')) //find the appropriate id of the row
-    taskDescript[propertyHour-9]['tasks'] = savedTask //save the task in the taskDescript object with the difference between the ID and 9 to correctly index it.  If the amount of properties changed within the object, the difference value will have to be changed.
-    storeTasks()
+    savedTask = buttonClicked.parent().siblings().eq(1).text(); //find the appropriate  textDisplay element and save the text
+    propertyHour = parseInt(buttonClicked.closest('.row').attr('id')); //find the appropriate id of the row
+    taskDescript[propertyHour-9]['tasks'] = savedTask; //save the task in the taskDescript object with the difference between the ID and 9 to correctly index it.  If the amount of properties changed within the object, the difference value will have to be changed.
+    storeTasks();
 }
 
+function clearDescriptions (event) {
+    toClear = confirm('Are you sure you want to clear your tasks?');
+    if (toClear) {
+        for (i=0; i<forTextDisplay.length; i++) {
+            taskDescript[i]['tasks'] = "No tasks this hour! Click me to edit!"
+        }
+        renderTasks();
+        storeTasks();
+    }
+}
 
 //Adding and delagating click events on the page.
 // $('.description').on('click', editDescription)
-$("button[type='button']").on('click', saveDescription)
-
+$('.saveBtn').on('click', saveDescription)
+$("[role='clear']").on('click', clearDescriptions)
 init() //obtain from local storage
