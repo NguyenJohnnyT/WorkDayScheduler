@@ -16,18 +16,21 @@ setInterval(function() { //refreshes the functions and colors in timeslots every
     updateSlots();
 }, 100)
 
+//create an array that contains all elements with [for='textDisplay'] attribute
+var forTextDisplay = $("div[for='textDisplay']")
+
 function updateSlots() {
     currentTime = now.format('HH');
     container = $('#timeblocks').children()
     for (i=0; i<container.length; i++) {
         if (parseInt(currentTime) > parseInt(container.eq(i).attr('id'))) {
             // container.eq(i).addClass('past') //bg color to red
-            container.find("#textDisplay").eq(i).addClass('past')
+            container.find(forTextDisplay).eq(i).addClass('past')
         } else if (parseInt(currentTime) === parseInt(container.eq(i).attr('id'))) {
             // container.eq(i).addClass('present')
-            container.find("#textDisplay").eq(i).addClass('present')
+            container.find(forTextDisplay).eq(i).addClass('present')
         // } else (container.eq(i).addClass('future'))
-        } else (container.find("#textDisplay").eq(i).addClass('future'))
+        } else (container.find(forTextDisplay).eq(i).addClass('future'))
     }
 }
 //***************************************************************** */
@@ -41,44 +44,63 @@ function updateSlots() {
 //taskDescript(ion) contains an base array of objects that have a key:value of time:(an integer) and tasks:(a string)
 taskDescript= [ 
     {   'time': 9,
-        'tasks': "No tasks this hour!"
+        'tasks': "No tasks this hour! Click me to edit!"
     },    {
         'time': 10,
-        'tasks': "No tasks this hour!"
+        'tasks': "No tasks this hour! Click me to edit!"
     },    {
         'time': 11,
-        'tasks': "No tasks this hour!"
+        'tasks': "No tasks this hour! Click me to edit!"
     },    {
         'time': 12,
-        'tasks': "No tasks this hour!"
+        'tasks': "No tasks this hour! Click me to edit!"
     },    {
         'time': 13,
-        'tasks': "No tasks this hour!"
+        'tasks': "No tasks this hour! Click me to edit!"
     },    {
         'time': 14,
-        'tasks': "No tasks this hour!"
+        'tasks': "No tasks this hour! Click me to edit!"
     },    {
         'time': 15,
-        'tasks': "No tasks this hour!"
+        'tasks': "No tasks this hour! Click me to edit!"
     },    {
         'time': 16,
-        'tasks': "No tasks this hour!"
+        'tasks': "No tasks this hour! Click me to edit!"
     },    {
         'time': 17,
-        'tasks': "No tasks this hour!"
+        'tasks': "No tasks this hour! Click me to edit!"
     },
 ]
 
-
-function editDescription (event) {
-    console.log(event);
+function init() {//parse the stringified object and see if there are any tasks
+    var storedTasks = JSON.parse(localStorage.getItem('tasks'));
+    if (storedTasks !== null) {
+        taskDescript = storedTasks
+    }
+    renderTasks()
 }
 
-function saveDescription (event) {
-    console.log(event);
+function storeTasks () { //store the tasks into 'tasks' key as a stringified object
+    localStorage.setItem('tasks', JSON.stringify(taskDescript))
+}
+
+function renderTasks () {
+    for (i=0; i < forTextDisplay.length; i++) { //forTextDisplay = $("div[for='textDisplay']")
+        forTextDisplay[i].textContent = taskDescript[i].tasks
+    }
+}
+
+function saveDescription (event) { //occurs when pressing the save button
+    buttonClicked = $(event.target); //find the <button> element
+    savedTask = buttonClicked.parent().siblings().eq(1).text() //find the appropriate  textDisplay element and save the text
+    propertyHour = parseInt(buttonClicked.closest('.row').attr('id')) //find the appropriate id of the row
+    taskDescript[propertyHour-9]['tasks'] = savedTask //save the task in the taskDescript object with the difference between the ID and 9 to correctly index it.  If the amount of properties changed within the object, the difference value will have to be changed.
+    storeTasks()
 }
 
 
 //Adding and delagating click events on the page.
-$('.description').on('click', editDescription)
+// $('.description').on('click', editDescription)
 $("button[type='button']").on('click', saveDescription)
+
+init() //obtain from local storage
