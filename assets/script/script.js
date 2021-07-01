@@ -93,12 +93,13 @@ function renderTasks () {
 }
 
 function saveDescription (event) { //occurs when pressing the save button
-    console.log(event.target);
     buttonClicked = $(event.target); //find the <button> element
     savedTask = buttonClicked.parent().siblings().eq(1).text(); //find the appropriate  textDisplay element and save the text
     propertyHour = parseInt(buttonClicked.closest('.row').attr('id')); //find the appropriate id of the row
     taskDescript[propertyHour-9]['tasks'] = savedTask; //save the task in the taskDescript object with the difference between the ID and 9 to correctly index it.  If the amount of properties changed within the object, the difference value will have to be changed.
     storeTasks();
+
+    alert('Saved task for ' + buttonClicked.closest('.time-block').children().eq(0).text())
 }
 
 function clearDescriptions (event) {
