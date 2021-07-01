@@ -20,10 +20,13 @@ function updateSlots() {
     container = $('#timeblocks').children()
     for (i=0; i<container.length; i++) {
         if (parseInt(currentTime) > parseInt(container.eq(i).attr('id'))) {
-            container.eq(i).attr('class', 'past') //bg color to red
+            // container.eq(i).addClass('past') //bg color to red
+            container.find("#textDisplay").eq(i).addClass('past')
         } else if (parseInt(currentTime) === parseInt(container.eq(i).attr('id'))) {
-            container.eq(i).attr('class', 'present')
-        } else (container.eq(i).attr('class', 'future'))
+            // container.eq(i).addClass('present')
+            container.find("#textDisplay").eq(i).addClass('present')
+        // } else (container.eq(i).addClass('future'))
+        } else (container.find("#textDisplay").eq(i).addClass('future'))
     }
 }
 

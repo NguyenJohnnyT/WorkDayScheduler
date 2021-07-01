@@ -22,23 +22,25 @@ textarea{
 }
 
 .description{
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
   white-space: pre-wrap;
 }
 
 .time-block{
   text-align: center;
-  border-radius: 15px;
+  border-radius: 15px 0px 0px 0px;
 }
 
 .row {
   /* white-space: pre-wrap; */
   height: 80px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-radius: 20px
 }
 
 .hour {
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   color: #000000;
   border-top: 1px dashed #000000;
 }
@@ -64,7 +66,7 @@ textarea{
   border-bottom-right-radius: 15px;
   background-color: #06AED5;
   height: 80px;
-  float: right;
+  float: left;
   color: white;
 }
 
