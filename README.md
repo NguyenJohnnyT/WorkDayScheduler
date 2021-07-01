@@ -11,6 +11,8 @@ Access via this [link](https://nguyenjohnnyt.github.io/WorkDayScheduler/) (https
 [Github repo](https://github.com/NguyenJohnnyT/WorkDayScheduler)
 
 ## Usage
+Example:
+<img src="./assets/images/taskExample.gif">
 
 Click on any section to edit the content.  Be sure to click the appropriate save button to save your task.
 
