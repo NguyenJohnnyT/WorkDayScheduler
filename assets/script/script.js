@@ -7,7 +7,7 @@ var now = moment(); //current date&time
 $('#currentDay').text(now.format('[Today is ]MMMM Do, YYYY')); //Give subtitle a date
 
 function updateTime () { //updating the clock with current timer
-    timer = moment(-0).format('hh:mm:ss')
+    timer = moment().format('hh:mm:ss')
     $('#currentTime').text(timer);
 }
 
